@@ -1,4 +1,5 @@
 from random import choice
+from sys import argv
 
 
 def open_and_read_file(file_path):
@@ -77,6 +78,8 @@ def make_text(chains):
         
         current_key = (random_text[-2], random_text[-1])
 
+        print current_key
+
         if chains.get(current_key):
     # with the random tuple, get a random string (using choice) 
     # from the tuple's value list and add that value to random_text
@@ -99,13 +102,15 @@ def make_text(chains):
 
 
 
-input_path = "gettysburg.txt"
+input_path = argv[1]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
+# print input_text
 
 # Get a Markov chain
 chains = make_chains(input_text)
+# print chains
 
 # Produce random text
 random_text = make_text(chains)
