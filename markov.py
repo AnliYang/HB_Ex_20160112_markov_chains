@@ -61,28 +61,53 @@ def make_chains(text_list):
     return chains
 
 
-make_chains(open_and_read_file("green-eggs.txt"))
+# make_chains(open_and_read_file("green-eggs.txt"))
 
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
     text = ""
 
-    # generate random tuple key to call
-    # use tuple to generate the rest of the text...
+    # generate random tuple key (using choice) to call
+    # set variable random_text (list) to include the two strings from the tuple
+    initial_key = choice(chains.keys())
+    random_text = [initial_key[0], initial_key[1]]
+
+    while True:
+        
+        current_key = (random_text[-2], random_text[-1])
+
+        if chains.get(current_key):
+    # with the random tuple, get a random string (using choice) 
+    # from the tuple's value list and add that value to random_text
+            next_word = choice(chains[current_key])
+            random_text.append(next_word)
+
+    # turn last two words of random_text into tuple like so 
+    # (random_text[-2], random_text[-1])
+
+
+        else:
+            break
+
+    # repeat process from above
+
+    random_text[0] = random_text[0].title()
+    text = ' '.join(random_text)
 
     return text
 
 
-# input_path = "green-eggs.txt"
 
-# # Open the file and turn it into one long string
-# input_text = open_and_read_file(input_path)
+input_path = "green-eggs.txt"
 
-# # # Get a Markov chain
-# # chains = make_chains(input_text)
+# Open the file and turn it into one long string
+input_text = open_and_read_file(input_path)
 
-# # # Produce random text
-# # random_text = make_text(chains)
+# Get a Markov chain
+chains = make_chains(input_text)
 
-# # print random_text
+# Produce random text
+random_text = make_text(chains)
+
+print random_text
